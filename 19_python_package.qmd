@@ -1,0 +1,6 @@
+---
+title: "19: Python Package (Optional)"
+---
+
+
+Considering the wealth of features that the FastF1 package offers, we had all important and accessible functions offered by the library. We decided not to build a python package specific for the project, since the resource, sufficiently covers the scope that we wish to cover for this project.

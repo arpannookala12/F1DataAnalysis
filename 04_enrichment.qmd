@@ -1,0 +1,42 @@
+---
+title: "4: Data enrichment"
+---
+
+Please navigate to `clean.ipynb` in the git repository to look at the entire code for, data enrichment, data cleaning, feature engineering, modeling, and results.
+
+In terms of data enrichment, we aggregate all the extracted datasets (Race Results, Qualifying Results, Pit Stops, Constructor Standings).
+
+Below is the dataframe snapshot of the merged dataset, the merge was performed on a common identifier which is *Season*.
+
+{{< embed clean.ipynb#merged-data >}}
+
+The other enrichment of the dataset is in terms of creating 5 features based on the dataset
+1. Average Finishing Position
+2. Podium Finishes
+3. Average Pit Stop Count
+4. Average Pit Stop Duration
+5. Total Points
+
+
+Code Snippet
+```python
+# Create new features
+enhanced_constructor_data['qualifying_race_position_delta'] = enhanced_constructor_data['position'] - enhanced_constructor_data['position_race']
+enhanced_constructor_data['average_qualifying_position'] = enhanced_constructor_data.groupby(['season', 'constructor_id'])['position'].transform('mean')
+enhanced_constructor_data['std_position_delta'] = enhanced_constructor_data.groupby(['season', 'constructor_id'])['qualifying_race_position_delta'].transform('std')
+
+
+# Calculate performance metrics
+performance_metrics = recent_data.groupby(['season', 'constructor_id']).agg(
+    average_finishing_position=pd.NamedAgg(column='position_race', aggfunc='mean'),
+    total_points=pd.NamedAgg(column='points_stand', aggfunc='sum'),
+    podium_finishes=pd.NamedAgg(column='position_race', aggfunc=lambda x: (x <= 3).sum()),
+    average_pit_stop_duration=pd.NamedAgg(column='duration', aggfunc='mean'),
+    average_pit_stop_count=pd.NamedAgg(column='stop', aggfunc='count'),
+    mean_qualifying_position=pd.NamedAgg(column='average_qualifying_position', aggfunc='mean'),
+    mean_position_delta=pd.NamedAgg(column='qualifying_race_position_delta', aggfunc='mean'),
+    std_position_delta=pd.NamedAgg(column='std_position_delta', aggfunc='mean')
+).reset_index()
+```
+
+{{< embed clean.ipynb#performance-metrics >}}

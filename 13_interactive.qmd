@@ -1,0 +1,14 @@
+---
+title: "13: Interactivity"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+The interactive widget is a dash app that has a drop down for selecting the driver and the specific lap, for a particular race session, Upon hovering all telemetry data can be viewed
+<!-- ```{=html}
+<iframe src="http://localhost:8080" width="100%" height="800" frameborder="0">
+Your browser does not support iframes.
+</iframe>
+``` -->

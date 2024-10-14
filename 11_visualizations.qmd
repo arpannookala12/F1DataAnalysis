@@ -1,0 +1,34 @@
+---
+title: "11: Visualizations"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+This page showcases the usage of the [FastF1](https://docs.fastf1.dev/) python package to generate some highly informative, appealing, and unique visualiztions.
+
+The code for these visualizations can be found in `viz.ipynb`
+
+# Position Comparison by Lap
+{{< embed viz.ipynb#first >}}
+
+# Fastest Lap Comparison
+{{< embed viz.ipynb#second >}}
+
+# Laptimes with different tyre compounds
+{{< embed viz.ipynb#third >}}
+
+# Gear Shifts in the fastest lap
+{{< embed viz.ipynb#fourth >}}
+
+# Circuit based speed map
+{{< embed viz.ipynb#fifth >}}
+
+# Speed traces with corner annotations
+{{< embed viz.ipynb#sixth >}}
+
+# Lap time distributions based on tyre compound
+{{< embed viz.ipynb#seventh >}}
+
+# Track map with numbered corners
+{{< embed viz.ipynb#eighth >}}

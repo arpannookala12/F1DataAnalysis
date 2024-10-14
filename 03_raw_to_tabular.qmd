@@ -1,0 +1,39 @@
+---
+title: "3: From raw to tabular data"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+# Transforming Raw Data from the Ergast API into pandas DataFrame
+
+
+Example of Race Result Extraction
+```{python}
+import requests
+import json
+import pandas as pd
+# Race Results
+race_results_url = 'http://ergast.com/api/f1/current/last/results.json'
+response = requests.get(race_results_url)
+data = response.json()
+races = data['MRData']['RaceTable']['Races']
+race = races[0]
+results = race['Results']
+df = pd.DataFrame({
+    'season': race['season'],
+    'race_name': race['raceName'],
+    'round': race['round'],
+    'position': [result['position'] for result in results],
+    'driver_id': [result['Driver']['driverId'] for result in results],
+    'constructor_id': [result['Constructor']['constructorId'] for result in results],
+    'laps': [result['laps'] for result in results],
+    'time': [result.get('Time', {}).get('time', 'N/A') for result in results],
+    'points': [result['points'] for result in results]
+})
+df.head()
+```
+
+
+Please navigate to `data_extract.ipynb` in the git repository to get the full code for extraction of data of all seasons since 1950.

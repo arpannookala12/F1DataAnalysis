@@ -1,0 +1,17 @@
+---
+title: "14: Poster"
+---
+
+```{=html}
+<!-- Download button -->
+<a href="poster.pdf" download="DataAlchemistsPoster.pdf" style="text-decoration: none; display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; border-radius: 5px; text-align: center; font-size: 16px;">
+    Download Poster
+</a>
+```
+
+```{=html}
+<!-- Embed the PDF file -->
+<iframe src="poster.pdf" style="width:100%; height:600px;" frameborder="0">
+    This browser does not support PDFs. Please download the PDF to view it: <a href="poster.pdf">Download PDF</a>.
+</iframe>
+```

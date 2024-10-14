@@ -1,0 +1,94 @@
+---
+title: "18: Continuous Integration"
+---
+
+The Github Workflow is set to run on every wednesday to fetch the latest race data, and then the test file discussed in Tests is run, after this the quarto publish gets triggered.
+
+Considering the Formula 1 Calendar, and the Ergast API update frequency the ideal data fetch would be the Wednesday of each week.
+# Github Workflow
+
+```yaml
+name: Automated Data Update and Publish
+on:
+  schedule:
+    # Runs at 00:00 UTC every Wednesday
+    - cron: '0 0 * * 3'
+  push:
+    branches:
+      - main
+jobs:
+  update-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # Use your PAT for checkout
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Python packages
+        run: pip install -r requirements.txt pytest pandas
+
+      - name: Run Data Loading Functions
+        run: python data_loading_functions.py
+
+      - name: Run Tests
+        run: pytest test_data_processing.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'arpannookala12'
+          git config --global user.email 'arpan.nookala@rutgers.edu'
+          git add -A
+          git commit -m "Automated data update" || echo "No changes to commit"
+          git push origin main
+
+  publish:
+    needs: update-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # Use your PAT for checkout
+
+      - name: Setup typst
+        uses: typst-community/setup-typst@v3
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install R packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::knitr 
+            any::rmarkdown
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install all necessary packages
+        run: pip install -r requirements.txt
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use default GITHUB_TOKEN here for GitHub Pages
+
+```

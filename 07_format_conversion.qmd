@@ -1,0 +1,15 @@
+---
+title: "7: Backup in several formats"
+---
+
+The data is backed up in 3 following formats
+
+# 1. SQLite3
+SQLite3 was selected as the primary storage format for the tidied data in the project due to its lightweight and self-contained nature, making it ideal for both development and production environments without the need for a separate server. This relational database management system enabled efficient querying and management of structured data. The tidied data, consisting of various metrics such as race results, driver statistics, and team performances, was stored in multiple relational tables. These tables were designed to optimize data retrieval and support complex queries, which are essential for analyzing performance trends and outcomes over multiple racing seasons.
+
+# 2. CSV
+CSV (Comma-Separated Values) files were used to facilitate intermediate data storage and manipulation. After retrieving and caching the raw data from the Ergast API in JSON format, the data was converted into pandas dataframes. These dataframes were then exported to CSV files to provide a human-readable and easily accessible format for initial data examination and cleaning. The use of CSV files supported a straightforward way to view and manipulate data in common spreadsheet applications, which was invaluable for spotting anomalies and ensuring data consistency before the final storage in the SQLite database.
+
+# 3. JSON
+The initial data capture from the Ergast API was stored in JSON (JavaScript Object Notation) format, which provided a flexible and text-readable medium for handling the nested and hierarchical data from the API. JSON's format aligns well with the web-based data retrieval used in this project, allowing for efficient caching of raw API responses without additional transformation. This preserved the original structure and completeness of the data, facilitating accurate and comprehensive data parsing and transformation processes later in the workflow. JSON files served as the primary data input, ensuring that all subsequent data transformations remained traceable and aligned with the original source.
+* * *

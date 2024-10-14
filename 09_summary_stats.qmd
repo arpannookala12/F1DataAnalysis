@@ -1,0 +1,36 @@
+---
+title: "9: Summary statistics"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+We compute some informative statistics on the merged dataset in the following manner: 
+
+```python
+import pandas as pd
+df = pd.read_csv('mergeddata.csv')
+# df.drop(columns='Unnamed: 0', inplace=True)
+# Filter data for years 2020 to 2024
+filtered_data = df[(df['season'] >= 2020) & (df['season'] <= 2024)]
+
+# Recalculate the requested summary statistics with the filtered data
+
+# 1. Average Points per Constructor
+average_points_per_constructor_filtered = filtered_data.groupby('constructor_id')['points_stand'].mean()
+
+# 2. Average Pit Stop Duration
+average_pit_stop_duration_filtered = filtered_data.groupby('constructor_id')['duration'].mean()
+
+# 3. Win Count per Driver
+win_count_per_driver_filtered = filtered_data[filtered_data['position_race'] == 1].groupby('driver_id').size()
+
+# 4. Average Qualifying Position per Driver
+average_qualifying_position_per_driver_filtered = filtered_data.groupby('driver_id')['position'].mean()
+
+average_points_per_constructor_filtered, average_pit_stop_duration_filtered, win_count_per_driver_filtered, average_qualifying_position_per_driver_filtered
+
+```
+
+{{< embed summarystats.ipynb#summary >}}

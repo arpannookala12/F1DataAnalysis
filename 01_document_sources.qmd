@@ -1,0 +1,29 @@
+---
+title: "1: Data Sources"
+---
+
+# Source:
+
+[Go to API source](https://ergast.com/mrd)
+
+The primary data source for our Formula 1 race analysis project is the Ergast Motor Racing Data API. This publicly available API provides extensive historical data on Formula 1 races, drivers, lap times, circuits, and standings, among other statistics.
+
+# Institution:
+The Ergast API is an independent project maintained by Chris Newell. It is not officially affiliated with the Formula 1 organization, but it aggregates data from various seasons of the Formula 1 World Championship.
+
+# Format of the Raw Data: 
+The API returns data in two main formats: JSON and XML. 
+
+# Nature of the Data:
+
+# Contents: 
+The Ergast API provides detailed information on Formula 1 races dating back to the first World Championship in 1950. It includes data on race schedules, results, driver standings, constructor standings, qualifying times, lap times, and more. Each record contains various pieces of information, such as race dates, locations, drivers' nationalities, teams, points awarded, and lap details.
+
+# Updates: 
+The data is updated regularly throughout the Formula 1 season, usually within a few days after each race. This ensures that the dataset includes the most recent race results and standings. The API also periodically incorporates historical data corrections and enhancements.
+
+# Accessibility: 
+The API allows users to query specific subsets of data using URL parameters. This makes it easy to access specific information relevant to particular research questions or analysis needs. For example, users can request data for a specific season, race, driver, or team.
+
+# Usage Limits: 
+While the API is available for free and does not require an API key, it does have usage limits to ensure fair access and prevent abuse. Users are encouraged to cache responses and minimize repetitive requests to the same endpoints.

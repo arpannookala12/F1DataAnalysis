@@ -1,0 +1,11 @@
+---
+title: "8: External services"
+---
+
+All the cached JSON data, sqlite databases, CSV files have been stored using Git LFS
+
+Please navigate to each backup option in the Git Repository accordingly - 
+
+- Folder Name - cache (contains JSON backup)
+
+- Folder Name - CSV (contains tidied data backup in CSV format)

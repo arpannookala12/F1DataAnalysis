@@ -1,0 +1,25 @@
+---
+title: "10: Statistical analisys"
+---
+
+All the work done under this section can be found in `clean.ipynb`.
+
+The process is as follows:
+- Merge the 4 chosen datasets on the common identifier.
+- Compute performance metrics
+- Impute missing values using Scikit's inbuilt functions
+- The goal is to predict the total number of points
+- We use RandomForestRegressor here for modeling
+
+# Let's look at the Actual vs predicted total points
+
+{{< embed clean.ipynb#prediction-actual >}}
+
+# Residual Plot
+{{< embed clean.ipynb#residual-plot >}}
+
+# Model Learning Curve
+{{< embed clean.ipynb#learning-curve >}}
+
+# MSE & R-squared
+{{< embed clean.ipynb#metrics >}}

@@ -1,0 +1,15 @@
+requests
+simplejson
+pandas
+fastf1
+scikit-learn
+matplotlib
+numpy
+pytest
+pyyaml
+nbformat
+nbclient
+jupyter
+plotly
+logging
+dash

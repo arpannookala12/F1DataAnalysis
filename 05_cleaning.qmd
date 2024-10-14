@@ -1,0 +1,19 @@
+---
+title: "5: Data cleaning"
+---
+
+In terms of Data Cleaning, we just had to get rid of any unnecessary extra columns being created in the data extraction process.
+
+<!-- For handling missing values we used the following simple procedure -->
+
+<!-- ```python
+from sklearn.impute import SimpleImputer
+
+# Imputing missing values
+imputer = SimpleImputer(strategy='median')
+X_imputed = imputer.fit_transform(X)
+``` -->
+
+The entire process can be found in `clean.ipynb`
+
+

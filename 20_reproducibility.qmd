@@ -1,0 +1,26 @@
+---
+title: "20: Reproducibility"
+---
+
+To execute the code, one has to ensure that they have installed the required packages listed in the requirements.txt file. These packages contain dependencies necessary for the proper functioning of the codebase. One can install them using a package manager such as pip by running the following command:
+```python
+pip install -r requirements.txt
+```
+
+# Required Packages
+```
+requests
+simplejson
+pandas
+fastf1
+scikit-learn
+matplotlib
+numpy
+pytest
+pyyaml
+nbformat
+nbclient
+jupyter
+plotly
+logging
+```

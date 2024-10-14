@@ -1,0 +1,133 @@
+---
+title: "6: Test data quality"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+
+Below are basic tests that ensure that
+- There are no missing values in the dataset.
+- There are enough rows coming in.
+* * *
+```{python}
+import requests
+import pandas as pd
+import json
+race_results_url = 'http://ergast.com/api/f1/current/last/results.json'
+response = requests.get(race_results_url)
+data = response.json()
+qualifying_standings_url = 'http://ergast.com/api/f1/current/last/qualifying.json'
+response2 = requests.get(qualifying_standings_url)
+data2 = response2.json()
+pit_stop_url = 'http://ergast.com/api/f1/current/last/pitstops.json'
+response3 = requests.get(pit_stop_url)
+data3 = response3.json()
+constructor_standings_url = 'http://ergast.com/api/f1/current/last/constructorStandings.json'
+response4 = requests.get(constructor_standings_url)
+data4 = response4.json()
+
+# import json
+# file_path1 = 'C:\\Users\\arpan\\Desktop\\DATAWRANGLING\\group-project-data_alchemists\\cache\\2024\\race_results_5.json'
+# with open(file_path1, 'r') as file:
+#     data = json.load(file_path1)
+races = data['MRData']['RaceTable']['Races']
+if races:
+    race = races[0]
+    results = race['Results']
+    df = pd.DataFrame({
+        'race_name': race['raceName'],
+        'round': race['round'],
+        'position': [result['position'] for result in results],
+        'driver_id': [result['Driver']['driverId'] for result in results],
+        'constructor_id': [result['Constructor']['constructorId'] for result in results],
+        'laps': [result['laps'] for result in results],
+        'time': [result.get('Time', {}).get('time', 'N/A') for result in results],
+        'points': [result['points'] for result in results]
+    })
+    # print(df.head())
+
+# file_path2 = 'C:\\Users\\arpan\\Desktop\\DATAWRANGLING\\group-project-data_alchemists\\cache\\2024\\qualifying_results_5.json'
+# with open(file_path2, 'r') as file:
+#     data2 = json.load(file_path2)
+races1 = data2['MRData']['RaceTable']['Races']
+if races1:
+    qualifyings = races1[0]['QualifyingResults']
+    df1 = pd.DataFrame({
+        'race_name': races[0]['raceName'],
+        'round': races[0]['round'],
+        'position': [qualifying['position'] for qualifying in qualifyings],
+        'driver_id': [qualifying['Driver']['driverId'] for qualifying in qualifyings],
+        'constructor_id': [qualifying['Constructor']['constructorId'] for qualifying in qualifyings],
+        'q1': [qualifying.get('Q1', 'N/A') for qualifying in qualifyings],
+        'q2': [qualifying.get('Q2', 'N/A') for qualifying in qualifyings],
+        'q3': [qualifying.get('Q3', 'N/A') for qualifying in qualifyings]
+    })
+    # print(df1.head())
+
+# file_path3 = 'C:\\Users\\arpan\\Desktop\\DATAWRANGLING\\group-project-data_alchemists\\cache\\2024\\pit_stops_5.json'
+# with open(file_path3, 'r') as file:
+#     data3 = json.load(file_path3)
+races2 = data3['MRData']['RaceTable']['Races']
+if races2:
+    pit_stops = races2[0].get('PitStops', [])
+    df2 = pd.DataFrame({
+        'race_name': races[0]['raceName'],
+        'driver_id': [pit['driverId'] for pit in pit_stops],
+        'stop': [pit['stop'] for pit in pit_stops],
+        'lap': [pit['lap'] for pit in pit_stops],
+        'time': [pit['time'] for pit in pit_stops],
+        'duration': [pit['duration'] for pit in pit_stops]
+    })
+    print(df2.head())
+# file_path4 = 'C:\\Users\\arpan\\Desktop\\DATAWRANGLING\\group-project-data_alchemists\\cache\\2024\\constructor_standings.json'
+# with open(file_path4, 'r') as file:
+#     data3 = json.load()
+standings = data4['MRData']['StandingsTable']['StandingsLists']
+if standings:
+    standings = standings[0]['ConstructorStandings']
+    df3 = pd.DataFrame({
+        'constructor_id': [standing['Constructor']['constructorId'] for standing in standings],
+        'position': [standing['position'] for standing in standings],
+        'points': [standing['points'] for standing in standings],
+        'wins': [standing['wins'] for standing in standings]
+    })
+    # print(df3.head())
+```
+
+
+# Assert statements
+```{python}
+# Test for dataframe df (Race Results)
+try:
+    assert not df.isnull().values.any(), "Dataframe contains NaN values"
+    assert len(df) > 1, "Dataframe has too few rows, check API response"
+    print(f"Success: passed all checks.")
+except AssertionError as e:
+    print(f"Failed: {str(e)}")
+
+# Test for dataframe df1 (Qualifying Results)
+try:
+    assert not df1.isnull().values.any(), "Dataframe contains NaN values"
+    assert len(df1) > 1, "Dataframe has too few rows, check API response"
+    print(f"Success: passed all checks.")
+except AssertionError as e:
+    print(f"Failed: {str(e)}")
+
+# Test for dataframe df2 (Pit Stops)
+try:
+    assert not df2.isnull().values.any(), "Dataframe contains NaN values"
+    assert len(df2) > 0, "Dataframe has no rows, check if pit stops data exists"
+    print(f"Success: passed all checks.")
+except AssertionError as e:
+    print(f"Failed: {str(e)}")
+
+# Test for dataframe df3 (Constructor Standings)
+try:
+    assert not df3.isnull().values.any(), "Dataframe contains NaN values"
+    assert len(df3) > 1, "Dataframe has too few rows, check API response"
+    print(f"Success: passed all checks.")
+except AssertionError as e:
+    print(f"Failed: {str(e)}")
+```

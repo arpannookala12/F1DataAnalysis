@@ -1,0 +1,54 @@
+---
+title: "2: Retrieval of raw data"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+# Fetching Data from the API
+
+The code snippets attached below showcase the scenario where we wish to call the most recent race from the current Formula 1 season.
+
+
+# Race Results JSON dump
+```{python}
+import requests
+# Race Results
+race_results_url = 'http://ergast.com/api/f1/current/last/results.json'
+response = requests.get(race_results_url)
+data = response.json()
+races = data['MRData']['RaceTable']['Races']
+print(races)
+```
+
+# Qualifying Results JSON dump
+```{python}
+# Qualifying Results
+qualifying_results_url = 'http://ergast.com/api/f1/current/last/qualifying.json'
+response = requests.get(qualifying_results_url)
+data = response.json()
+quali = data['MRData']['RaceTable']['Races']
+print(quali)
+```
+
+# Pit Stops JSON dump
+```{python}
+# Pit Stops
+pit_stops_url = 'http://ergast.com/api/f1/current/last/pitstops.json'
+response = requests.get(race_results_url)
+data = response.json()
+pitstops = data['MRData']['RaceTable']['Races']
+print(pitstops)
+```
+
+# Constructor Standings JSON dump
+```{python}
+# Constructor Standings
+constructor_standings_url = 'http://ergast.com/api/f1/current/last/constructorStandings.json'
+response = requests.get(constructor_standings_url)
+data = response.json()
+standings = data['MRData']['StandingsTable']['StandingsLists']
+standings1 = data['MRData']['StandingsTable']['StandingsLists']
+print(standings)
+```
